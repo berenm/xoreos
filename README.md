@@ -1,5 +1,6 @@
 xoreos README
 =============
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/berenm/xoreos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 xoreos is an open source implementation of BioWare's Aurora engine and its
 derivatives, licensed under the terms of the [GNU General Public License
