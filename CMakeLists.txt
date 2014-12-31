@@ -204,6 +204,10 @@ if(GIT_FOUND)
 endif()
 
 
+include(CTest)
+enable_testing()
+add_subdirectory(test)
+
 # -------------------------------------------------------------------------
 # documentation
 option(XOREOS_BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" OFF)
