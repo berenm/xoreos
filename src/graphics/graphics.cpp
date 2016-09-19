@@ -27,8 +27,6 @@
 
 #include <boost/bind.hpp>
 
-#include "src/version/version.h"
-
 #include "src/common/util.h"
 #include "src/common/maths.h"
 #include "src/common/error.h"
@@ -95,8 +93,6 @@ GraphicsManager::GraphicsManager() {
 	_clipNear  = 1.0f;
 	_clipFar   = 1000.0f;
 
-	_windowTitle = XOREOS_NAMEVERSION;
-
 	_screen = 0;
 
 	_width = 800;
@@ -126,8 +122,10 @@ GraphicsManager::~GraphicsManager() {
 	delete _fpsCounter;
 }
 
-void GraphicsManager::init() {
+void GraphicsManager::init(const Common::UString &defaultWindowTitle) {
 	Common::enforceMainThread();
+
+	_windowTitleDefault = _windowTitle = defaultWindowTitle;
 
 	_debugGL = ConfigMan.getBool("debuggl", false);
 
@@ -522,7 +520,7 @@ void GraphicsManager::checkGLExtensions() {
 void GraphicsManager::setWindowTitle(const Common::UString &title) {
 	_windowTitle = title;
 	if (_windowTitle.empty())
-		_windowTitle = XOREOS_NAMEVERSION;
+		_windowTitle = _windowTitleDefault;
 
 	SDL_SetWindowTitle(_screen, _windowTitle.c_str());
 }

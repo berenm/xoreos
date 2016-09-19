@@ -52,7 +52,7 @@ public:
 	~GraphicsManager();
 
 	/** Initialize the graphics subsystem. */
-	void init();
+	void init(const Common::UString &defaultWindowTitle = "");
 	/** Deinitialize the graphics subsystem. */
 	void deinit();
 
@@ -217,7 +217,8 @@ private:
 	float _clipNear;
 	float _clipFar;
 
-	Common::UString _windowTitle; ///< The current window title.
+	Common::UString _windowTitleDefault; ///< The default window title.
+	Common::UString _windowTitle;        ///< The current window title.
 
 	SDL_Window *_screen; ///< The OpenGL hardware surface.
 	SDL_GLContext _glContext;

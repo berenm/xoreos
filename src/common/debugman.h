@@ -146,10 +146,16 @@ public:
 	/** Log (and print) an OpenGL debug message. */
 	void logDebugGL(DebugChannel channel, uint32 level, DebugGLType type, uint32 id, const char *msg);
 
-	/** Open a log file where all debug output will be written to. */
-	bool openLogFile(const UString &file);
+	/** Open a log file where all debug output will be written to.
+	 *
+	 *  For ease of debugging and build identification, the xoreos version string
+	 *  supplied to this method will be the first line written to the file.
+	 */
+	bool openLogFile(const UString &file, const UString &xoreosVersionString = "");
+
 	/** Close the current log file. */
 	void closeLogFile();
+
 	/** Log that string to the current log file. */
 	void logString(const UString &str);
 

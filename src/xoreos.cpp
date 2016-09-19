@@ -31,6 +31,8 @@
 
 #include "src/cline.h"
 
+#include "src/version/version.h"
+
 #include "src/common/ustring.h"
 #include "src/common/util.h"
 #include "src/common/error.h"
@@ -137,7 +139,7 @@ int main(int argc, char **argv) {
 		logFile.clear();
 
 	if (!logFile.empty())
-		if (!DebugMan.openLogFile(logFile))
+		if (!DebugMan.openLogFile(logFile, Version::getProjectNameVersionFull()))
 			warning("Failed to open log file \"%s\" for writing", logFile.c_str());
 
 	DebugMan.logCommandLine(args);
@@ -167,7 +169,7 @@ int main(int argc, char **argv) {
 		init();
 
 		// Probe and create the game engine
-		gameThread->init(baseDir);
+		gameThread->init(baseDir, Version::getProjectNameVersion());
 
 		if (ConfigMan.getBool("listdebug", false)) {
 			// List debug channels
@@ -283,7 +285,7 @@ static void init() {
 	Common::initXML();
 
 	// Init subsystems
-	GfxMan.init();
+	GfxMan.init(Version::getProjectNameVersion());
 	status("Graphics subsystem initialized");
 	SoundMan.init();
 	status("Sound subsystem initialized");

@@ -24,8 +24,6 @@
 
 #include <cassert>
 
-#include "src/version/version.h"
-
 #include "src/common/util.h"
 #include "src/common/error.h"
 #include "src/common/ustring.h"
@@ -49,7 +47,7 @@ GameThread::~GameThread() {
 	delete _game;
 }
 
-void GameThread::init(const Common::UString &baseDir) {
+void GameThread::init(const Common::UString &baseDir, const Common::UString &xoreosVersionString) {
 	// Detecting the game
 
 	delete _game;
@@ -58,13 +56,22 @@ void GameThread::init(const Common::UString &baseDir) {
 	if (!(_game = EngineMan.probeGame(baseDir)))
 		throw Common::Exception("Unable to detect the game");
 
-	// Get the game description from the config, or alternatively
-	// construct one from the game name and platform.
+	/* Construct the game window title:
+	 * If we were given a xoreos name and version string, print that first
+	 * and a separator. Then, add the game description from the config, or
+	 * if we don't have such a description, construct one from the game
+	 * name and platform.
+	 */
+
+	Common::UString versionString = xoreosVersionString;
+	if (!versionString.empty())
+		versionString += " -- ";
+
 	Common::UString description;
 	if (!ConfigMan.getKey("description", description))
 		description = _game->getGameName(true);
 
-	GfxMan.setWindowTitle(Common::UString(XOREOS_NAMEVERSION) + " -- " + description);
+	GfxMan.setWindowTitle(versionString + description);
 
 	status("Detected game \"%s\"", _game->getGameName(false).c_str());
 }

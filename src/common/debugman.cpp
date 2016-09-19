@@ -24,8 +24,6 @@
  *  The debug manager, managing debug channels.
  */
 
-#include "src/version/version.h"
-
 #include "src/common/maths.h"
 #include "src/common/util.h"
 #include "src/common/strutil.h"
@@ -216,7 +214,7 @@ void DebugManager::logDebugGL(DebugChannel channel, uint32 level, DebugGLType ty
 	status("%s<%s,%u,%u>: %s", kDebugNames[channel], kDebugGLTypes[type], level, id, msg);
 }
 
-bool DebugManager::openLogFile(const UString &file) {
+bool DebugManager::openLogFile(const UString &file, const UString &xoreosVersionString) {
 	closeLogFile();
 
 	_logFileStartLine = true;
@@ -233,8 +231,10 @@ bool DebugManager::openLogFile(const UString &file) {
 	if (!_logFile.open(path))
 		return false;
 
-	logString(XOREOS_NAMEVERSIONFULL);
-	logString("\n");
+	if (!xoreosVersionString.empty()) {
+		logString(xoreosVersionString);
+		logString("\n");
+	}
 
 	return true;
 }

@@ -37,7 +37,7 @@ public:
 	GameThread();
 	~GameThread();
 
-	void init(const Common::UString &baseDir);
+	void init(const Common::UString &baseDir, const Common::UString &xoreosVersionString = "");
 
 	void run();
 
